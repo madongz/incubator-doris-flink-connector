@@ -53,7 +53,7 @@ public class DorisSinkSQLExample {
                         "  'sink.buffer-count' = '4',\n" +
                         "  'sink.buffer-size' = '4086'," +
                         "  'sink.label-prefix' = 'doris_label',\n" +
-                        "  'sink.properties.strip_outer_array' = 'true'\n" +
+                        "  'sink.properties.read_json_by_line' = 'true'\n" +
                         ")");
         tEnv.executeSql("INSERT INTO doris_test_sink select name,age from doris_test");
     }

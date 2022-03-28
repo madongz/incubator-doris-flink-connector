@@ -57,7 +57,7 @@ import static org.apache.doris.flink.sink.ResponseUtil.LABEL_EXIST_PATTERN;
 import static org.apache.doris.flink.sink.LoadStatus.LABEL_ALREADY_EXIST;
 import static org.apache.doris.flink.sink.writer.LoadConstants.CSV;
 import static org.apache.doris.flink.sink.writer.LoadConstants.FORMAT_KEY;
-import static org.apache.doris.flink.sink.writer.LoadConstants.JSON;
+import static org.apache.doris.flink.sink.writer.LoadConstants.LINE_DELIMITER_DEFAULT;
 import static org.apache.doris.flink.sink.writer.LoadConstants.LINE_DELIMITER_KEY;
 
 /**
@@ -110,11 +110,7 @@ public class DorisStreamLoad implements Serializable {
                 new LinkedBlockingQueue<>(), new ExecutorThreadFactory("stream-load-upload"));
         this.recordStream = new RecordStream(executionOptions.getBufferSize(), executionOptions.getBufferCount());
         this.format = executionOptions.getStreamLoadProp().getProperty(FORMAT_KEY, CSV);
-        if (JSON.equals(format)) {
-            lineDelimiter = ",".getBytes();
-        } else {
-            lineDelimiter = streamLoadProp.getProperty(LINE_DELIMITER_KEY, "\n").getBytes();
-        }
+        lineDelimiter = streamLoadProp.getProperty(LINE_DELIMITER_KEY, LINE_DELIMITER_DEFAULT).getBytes();
         loadBatchFirstRecord = true;
     }
 
@@ -219,9 +215,6 @@ public class DorisStreamLoad implements Serializable {
     }
 
     public RespContent stopLoad() throws IOException{
-        if (JSON.equals(format)) {
-            recordStream.write(JSON_ARRAY_END);
-        }
         recordStream.endInput();
         LOG.info("stream load stopped.");
         Preconditions.checkState(pendingLoadFuture != null);
@@ -260,9 +253,6 @@ public class DorisStreamLoad implements Serializable {
             String err = "failed to stream load data with label: " + label;
             LOG.warn(err, e);
             throw e;
-        }
-        if (JSON.equals(format)) {
-            recordStream.write(JSON_ARRAY_START);
         }
     }
 
