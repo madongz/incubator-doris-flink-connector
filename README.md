@@ -24,11 +24,11 @@ under the License.
 
 ## Flink Doris Connector
 
-Flink Doris Connector now support flink version from 1.11 to 1.14.
+Flink Doris Connector now support flink version from 1.11 to 1.15.
 
 If you wish to contribute or use a connector from flink 1.13 (and earlier), please use the [branch-for-flink-before-1.13](https://github.com/apache/doris-flink-connector/tree/branch-for-flink-before-1.13)
 
-More information about compilation and usage, please visit [Flink Doris Connector](https://doris.apache.org/docs/ecosystem/flink-doris-connector.html)
+More information about compilation and usage, please visit [Flink Doris Connector](https://doris.apache.org/docs/ecosystem/flink-doris-connector/)
 
 ## License
 
@@ -37,7 +37,7 @@ More information about compilation and usage, please visit [Flink Doris Connecto
 ## Building
 You need to copy customer_env.sh.tpl to customer_env.sh before build and you need to configure it before build.
 ```shell
-sh build.sh --flink 1.14.3 --scala 2.12
+sh build.sh --flink 1.15.2 --scala 2.12
 ```
 
 If you are using mac, you must install gnu-getopt before executing the build.sh.

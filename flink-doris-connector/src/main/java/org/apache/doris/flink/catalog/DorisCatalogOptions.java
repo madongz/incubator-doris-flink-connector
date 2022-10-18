@@ -14,15 +14,13 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
+package org.apache.doris.flink.catalog;
 
-package org.apache.doris.flink.exception;
+import org.apache.flink.configuration.ConfigOption;
+import org.apache.flink.configuration.ConfigOptions;
+import org.apache.flink.table.catalog.CommonCatalogOptions;
 
-public class ConnectedFailedException extends DorisRuntimeException {
-    public ConnectedFailedException(String server, Throwable cause) {
-        super("Connect to " + server + "failed.", cause);
-    }
-
-    public ConnectedFailedException(String server, int statusCode, Throwable cause) {
-        super("Connect to " + server + "failed, status code is " + statusCode + ".", cause);
-    }
+public class DorisCatalogOptions {
+    public static final ConfigOption<String> JDBCURL = ConfigOptions.key("jdbc-url").stringType().noDefaultValue().withDescription("doris jdbc url.");
+    public static final ConfigOption<String> DEFAULT_DATABASE = ConfigOptions.key(CommonCatalogOptions.DEFAULT_DATABASE_KEY).stringType().noDefaultValue();
 }
